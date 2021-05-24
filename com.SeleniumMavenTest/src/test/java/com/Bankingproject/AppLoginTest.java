@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
@@ -65,14 +66,18 @@ public class AppLoginTest
 		driver.findElement(By.name("user")).sendKeys("tester");
 		System.out.println("Enter username");
 		test.log(LogStatus.INFO, "Enter User Name");
+		Reporter.log("Verify username");
 		
 		driver.findElement(By.name("pass")).sendKeys("admin123");
     	System.out.println("Enter password");
     	test.log(LogStatus.INFO, "Enter password");
+    	Reporter.log("verify password");
+    	
 		
 		WebElement loginbutton = driver.findElement(By.name("btnSubmit"));
 		System.out.println("Click button");
 		test.log(LogStatus.INFO, "verify button");
+		Reporter.log("verify button");
 		
 		
 		if(loginbutton.isEnabled()) {
