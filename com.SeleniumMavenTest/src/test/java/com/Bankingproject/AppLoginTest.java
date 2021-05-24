@@ -2,16 +2,21 @@ package com.Bankingproject;
 
 
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import com.Project.Utilities.Screens;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
@@ -68,7 +73,8 @@ public class AppLoginTest
 		WebElement loginbutton = driver.findElement(By.name("btnSubmit"));
 		System.out.println("Click button");
 		test.log(LogStatus.INFO, "verify button");
-
+		
+		
 		if(loginbutton.isEnabled()) {
 			loginbutton.click();
 			System.out.println("Login Button verified");
@@ -79,14 +85,28 @@ public class AppLoginTest
 			System.out.println("Does not verified");
 		}
 			
-        
+		
+		boolean buttonpresent = driver.getPageSource().contains("btnSubmit");		
+		Assert.assertTrue(buttonpresent);
     }
     
     
  
 	
     
-    @AfterTest
+   @AfterMethod
+   public void testfailreport(ITestResult result) throws IOException {
+	   
+	   if(result.getStatus()==ITestResult.FAILURE) {
+		   Screens.getscreen(driver, "Test Step Failed");
+	   }
+	   
+	   
+   }
+
+
+
+	@AfterTest
     public void closebrowser() {
     	
     	driver.close();
